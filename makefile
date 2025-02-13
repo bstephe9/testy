@@ -19,7 +19,7 @@ OBJS := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC_FILES))
 CLEAN_FILES = *.exe *.o *.html *.wasm
 TEST_FILE = $(TESTS_DIR)/test_chip8.c
 TEST_TARGET = test_chip8
-EMCC_OUTPUT = chip8
+EMCC_TARGET = index.html
 
 all: $(TARGET)
 
@@ -39,8 +39,7 @@ $(TEST_TARGET): $(TEST_FILE)
 
 # Generate emcc output and move to public/
 web: $(SRC_FILES)
-	emcc $(SRC_FILES) -o $(EMCC_OUTPUT).html $(CFLAGS) $(EMFLAGS)
-	mv $(EMCC_OUTPUT)* public/
+	emcc $(SRC_FILES) -o $(PUBLIC_DIR)/$(EMCC_TARGET) $(CFLAGS) $(EMFLAGS)
 
 clean:
 	rm -rf $(BUILD_DIR) $(TARGET)
