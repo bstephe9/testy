@@ -34,6 +34,12 @@ jobs:
       - name: Compile with emcc
         run: make web
 
+      - name: Upload production-ready build files
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-files
+          path: ./public
+
   deploy:
     name: Deploy
     needs: build
@@ -43,6 +49,12 @@ jobs:
       contents: write
 
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: production-files
+          path: ./public
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
